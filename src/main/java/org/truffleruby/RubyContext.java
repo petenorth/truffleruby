@@ -450,8 +450,13 @@ public class RubyContext {
 
         finalizing = true;
 
+        Metrics.printTime("before-run-system-exit-hooks");
         atExitManager.runSystemExitHooks();
+        Metrics.printTime("after-run-system-exit-hooks:");
+
+        Metrics.printTime("before-kill-and-wait-other-threads");
         threadManager.killAndWaitOtherThreads();
+        Metrics.printTime("after-kill-and-wait-other-threads");
     }
 
     private final ReentrantLock disposeLock = new ReentrantLock();
